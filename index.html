@@ -1,0 +1,1134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aaron · 个人主页</title>
+  <meta name="description" content="Aaron 的个人主页：文章、资源导航、联系方式（yongjie1121@126.com）。" />
+  <style>
+    :root{
+      --bg: #f6f9ff;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --line: rgba(15, 23, 42, .10);
+
+      --blue-900:#0b2a6f;
+      --blue-700:#1d4ed8;
+
+      --shadow: 0 14px 40px rgba(2, 6, 23, .10);
+      --shadow-soft: 0 10px 24px rgba(2, 6, 23, .08);
+      --radius: 18px;
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+                   Arial, "Noto Sans", "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 400px at 15% 0%, rgba(37,99,235,.14), transparent 55%),
+        radial-gradient(700px 420px at 88% 8%, rgba(29,78,216,.12), transparent 55%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 65%);
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    .container{
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    /* Top bar */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.72);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 14px 0;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .brand-badge{
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--blue-700), var(--blue-900));
+      box-shadow: 0 10px 24px rgba(37,99,235,.22);
+      display:grid;
+      place-items:center;
+      color:#fff;
+      font-weight: 900;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav a{
+      padding: 8px 10px;
+      border-radius: 12px;
+      color: var(--muted);
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+    .nav a:hover{
+      color: var(--text);
+      background: rgba(37,99,235,.06);
+      border-color: rgba(37,99,235,.18);
+      text-decoration: none;
+    }
+
+    .menu-btn{
+      display:none;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      box-shadow: var(--shadow-soft);
+      cursor:pointer;
+      font-weight: 700;
+    }
+
+    /* Layout */
+    .layout{
+      display:grid;
+      grid-template-columns: 360px 1fr;
+      gap: 22px;
+      padding: 22px 0 28px;
+      align-items: start;
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* Sidebar */
+    .sidebar{ position: sticky; top: 84px; }
+    .profile{
+      padding: 18px;
+      overflow:hidden;
+    }
+    .profile-hero{
+      background:
+        radial-gradient(520px 240px at 10% 0%, rgba(37,99,235,.20), transparent 55%),
+        radial-gradient(420px 220px at 90% 10%, rgba(29,78,216,.18), transparent 55%),
+        linear-gradient(135deg, rgba(219,234,254,.7), rgba(255,255,255,.75));
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid rgba(37,99,235,.16);
+    }
+    .avatar-row{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+    }
+    .avatar{
+      width: 68px;
+      height: 68px;
+      border-radius: 22px;
+      overflow:hidden;
+      border: 2px solid rgba(37,99,235,.25);
+      background: #fff;
+      flex: none;
+      box-shadow: 0 12px 24px rgba(2,6,23,.08);
+    }
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+    .who .name{
+      font-size: 18px;
+      font-weight: 900;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .who .tagline{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .contact{
+      margin-top: 12px;
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(37,99,235,.06);
+      border: 1px solid rgba(37,99,235,.16);
+      color: var(--blue-900);
+      font-weight: 800;
+      font-size: 13px;
+      text-decoration: none;
+    }
+    .pill:hover{ text-decoration: none; background: rgba(37,99,235,.10); }
+
+    .section{
+      margin-top: 14px;
+      padding: 14px 16px;
+    }
+    .section h3{
+      margin: 0 0 10px;
+      font-size: 13px;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .links{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .icon-btn{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 10px 20px rgba(2,6,23,.06);
+      text-decoration:none;
+      font-weight: 800;
+      color: var(--text);
+      font-size: 13px;
+    }
+    .icon{
+      width: 18px;
+      height: 18px;
+      color: var(--blue-700);
+    }
+
+    .kv-list{
+      display:flex;
+      flex-direction: column;
+      gap: 8px;
+      padding:0;
+      margin:0;
+      list-style:none;
+    }
+    .kv{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.8);
+      text-decoration:none;
+      cursor: pointer;
+    }
+    .kv:hover{ background: rgba(37,99,235,.06); text-decoration:none; }
+    .kv .k{ font-weight: 800; color: var(--text); }
+    .kv .v{
+      font-weight: 900;
+      color: var(--blue-700);
+      background: rgba(37,99,235,.10);
+      border: 1px solid rgba(37,99,235,.18);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    .tags{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag{
+      border-radius: 999px;
+      padding: 8px 10px;
+      border: 1px solid rgba(37,99,235,.16);
+      background: rgba(37,99,235,.06);
+      color: var(--blue-900);
+      font-weight: 800;
+      font-size: 13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .tag[aria-pressed="true"]{
+      background: rgba(37,99,235,.16);
+      border-color: rgba(37,99,235,.28);
+      box-shadow: 0 10px 20px rgba(37,99,235,.14);
+    }
+
+    /* Main content */
+    .main{ padding: 0; overflow:hidden; }
+    .main-head{
+      padding: 18px 18px 12px;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(860px 320px at 15% 0%, rgba(37,99,235,.12), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.55));
+    }
+    .main-title{
+      margin: 0;
+      font-size: 20px;
+      font-weight: 950;
+      letter-spacing: .2px;
+    }
+    .main-sub{
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-weight: 650;
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .filters{
+      margin-top: 12px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+    .search{
+      flex: 1;
+      min-width: 220px;
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.9);
+    }
+    .search input{
+      border:none;
+      outline:none;
+      background:transparent;
+      width:100%;
+      font-size: 14px;
+    }
+    .btn{
+      border: 1px solid rgba(37,99,235,.18);
+      background: rgba(37,99,235,.06);
+      color: var(--blue-900);
+      font-weight: 900;
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor:pointer;
+    }
+    .btn:hover{ background: rgba(37,99,235,.10); }
+
+    .posts{
+      padding: 16px;
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .post{
+      padding: 14px 14px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.95);
+      box-shadow: 0 10px 22px rgba(2,6,23,.06);
+      cursor: pointer;
+    }
+    .post:hover{
+      border-color: rgba(37,99,235,.22);
+      box-shadow: 0 16px 34px rgba(2,6,23,.10);
+      transform: translateY(-1px);
+      transition: .18s ease;
+    }
+    .meta{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .badge{
+      font-weight: 950;
+      color: var(--blue-900);
+      background: rgba(37,99,235,.10);
+      border: 1px solid rgba(37,99,235,.20);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+    .crumbs{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+      flex-wrap: wrap;
+      color: var(--muted);
+    }
+    .crumbs a{ color: var(--muted); text-decoration:none; }
+    .crumbs a:hover{ color: var(--text); text-decoration:underline; }
+    .post h2{
+      margin: 10px 0 8px;
+      font-size: 18px;
+      letter-spacing: .2px;
+    }
+    .excerpt{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-weight: 650;
+      font-size: 14px;
+    }
+    .post-tags{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .post-tags .tag{
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    footer{
+      padding: 22px 0 34px;
+      color: var(--muted);
+      text-align:center;
+      font-weight: 650;
+    }
+
+    /* ===== 文章弹窗 ===== */
+    .modal-backdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(2,6,23,.55);
+      z-index: 1200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+    .modal-backdrop.open{ display:flex; }
+    .modal{
+      width: min(920px, 100%);
+      max-height: min(86vh, 900px);
+      overflow: hidden;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.20);
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 30px 80px rgba(2,6,23,.35);
+    }
+    .modal-header{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      background:
+        radial-gradient(680px 220px at 10% 0%, rgba(37,99,235,.14), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.65));
+    }
+    .modal-title{
+      margin: 0;
+      font-size: 18px;
+      font-weight: 950;
+      letter-spacing: .2px;
+      line-height: 1.2;
+    }
+    .modal-submeta{
+      margin-top: 8px;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 13px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+    .modal-body{
+      padding: 16px;
+      overflow:auto;
+      max-height: calc(min(86vh, 900px) - 64px);
+    }
+    .modal-close{
+      border: 1px solid rgba(37,99,235,.18);
+      background: rgba(37,99,235,.06);
+      color: var(--blue-900);
+      font-weight: 950;
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor:pointer;
+      white-space: nowrap;
+    }
+    .modal-close:hover{ background: rgba(37,99,235,.10); }
+
+    /* 正文排版：更美观 */
+    .article-content{
+      color: var(--text);
+      line-height: 1.85;
+      font-weight: 650;
+      font-size: 15px;
+    }
+    .article-content p{ margin: 0 0 12px; }
+    .article-content h3{
+      margin: 18px 0 10px;
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing: .2px;
+    }
+    .article-content ul,
+    .article-content ol{
+      margin: 10px 0 12px;
+      padding-left: 20px;
+    }
+    .article-content li{ margin: 6px 0; }
+    .article-content hr{
+      border: none;
+      height: 1px;
+      background: rgba(15,23,42,.10);
+      margin: 16px 0;
+    }
+    .article-content blockquote{
+      margin: 12px 0;
+      padding: 12px 14px;
+      border-left: 4px solid rgba(37,99,235,.35);
+      background: rgba(37,99,235,.06);
+      border-radius: 14px;
+      color: rgba(15,23,42,.85);
+    }
+    .article-content code{
+      background: rgba(37,99,235,.08);
+      border: 1px solid rgba(37,99,235,.12);
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+    }
+    .article-content pre{
+      background: rgba(2,6,23,.88);
+      color:#fff;
+      padding: 12px 14px;
+      border-radius: 16px;
+      overflow:auto;
+      border: 1px solid rgba(255,255,255,.14);
+      margin: 12px 0 14px;
+    }
+    .article-content pre code{ background: transparent; border: none; padding: 0; color: inherit; }
+
+    @media (max-width: 980px){
+      .layout{ grid-template-columns: 1fr; }
+      .sidebar{ position: static; }
+      .menu-btn{ display:inline-flex; }
+      .nav{
+        display:none;
+        width: 100%;
+        justify-content:flex-start;
+        padding: 10px 0 0;
+      }
+      .nav.open{ display:flex; }
+      .topbar-inner{ flex-wrap: wrap; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="brand" aria-label="Site brand">
+          <div class="brand-badge" aria-hidden="true" id="brandBadge">A</div>
+          <div>
+            <div style="font-size:14px;font-weight:950;line-height:1.15" id="brandName">Aaron</div>
+            <div style="font-size:12px;color:var(--muted);font-weight:700;line-height:1.2" id="brandSub">蓝白基调 · 个人主页</div>
+          </div>
+        </div>
+
+        <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="topNav">菜单</button>
+
+        <nav class="nav" id="topNav" aria-label="Top navigation">
+          <a href="#home">主页</a>
+          <a href="#tools">AI相关工具</a>
+          <a href="#resources">资源导航</a>
+          <a href="#archive">归档</a>
+          <a href="#about">关于</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="card profile">
+          <div class="profile-hero">
+            <div class="avatar-row">
+              <div class="avatar" title="头像">
+                <img id="avatarImg" src="assets/avatar.jpg" alt="头像"
+                  onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22136%22 height=%22136%22><defs><linearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop stop-color=%22%231d4ed8%22/><stop offset=%221%22 stop-color=%22%230b2a6f%22/></linearGradient></defs><rect width=%22100%25%22 height=%22100%25%22 rx=%2224%22 fill=%22url(%23g)%22/><text x=%2250%25%22 y=%2256%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2256%22 font-weight=%22900%22 fill=%22white%22>A</text></svg>';" />
+              </div>
+              <div class="who">
+                <p class="name" id="profileName">Aaron</p>
+                <p class="tagline" id="profileTagline">分享 · 记录 · 链接有用的工具与文章</p>
+              </div>
+            </div>
+
+            <div class="contact" aria-label="Contact">
+              <a class="pill" id="emailLink" href="mailto:yongjie1121@126.com">✉️ <span id="emailText">yongjie1121@126.com</span></a>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>社交</h3>
+            <div class="links" id="socialLinks"></div>
+          </div>
+
+          <div class="section">
+            <h3>分类</h3>
+            <ul class="kv-list" id="categoryList"></ul>
+          </div>
+
+          <div class="section">
+            <h3>标签（点击筛选）</h3>
+            <div class="tags" id="tagList"></div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="card main" id="home">
+        <div class="main-head">
+          <h1 class="main-title" id="mainTitle">最新文章</h1>
+          <p class="main-sub" id="mainSub">
+            已收录 4 篇文章（数据驱动：文章 / 标签 / 分类都从代码配置），点击文章可打开全文。
+          </p>
+
+          <div class="filters">
+            <div class="search" role="search" aria-label="Search posts">
+              🔎
+              <input id="searchInput" type="search" placeholder="搜索标题/摘要…" autocomplete="off" />
+            </div>
+            <button class="btn" id="clearBtn" type="button">清除筛选</button>
+          </div>
+        </div>
+
+        <section class="posts" id="postList" aria-label="Posts list"></section>
+      </main>
+    </div>
+
+    <footer>
+      © <span id="year"></span> <span id="footerName">Aaron</span> · 联系方式：
+      <a id="footerEmailLink" href="mailto:yongjie1121@126.com"><span id="footerEmailText">yongjie1121@126.com</span></a>
+    </footer>
+  </div>
+
+  <!-- 文章弹窗 -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="文章详情">
+      <div class="modal-header">
+        <div style="min-width:0">
+          <h2 class="modal-title" id="modalTitle">文章标题</h2>
+          <div class="modal-submeta" id="modalMeta"></div>
+        </div>
+        <button class="modal-close" id="modalCloseBtn" type="button">关闭（Esc）</button>
+      </div>
+      <div class="modal-body">
+        <div id="modalContent" class="article-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================
+       1) 你主要只改这里：SITE / TAGS / POSTS
+       ========================================================= */
+
+    const SITE = {
+      name: "Aaron",
+      subtitle: "个人主页",
+      tagline: "分享 · 记录 · 链接有用的工具与文章",
+      email: "yongjie1121@126.com",
+      avatar: "assets/avatar.jpg",  // 也可换成网络地址
+      socials: [
+        { label: "GitHub", href: "https://github.com/", icon: "github" },
+        { label: "B站", href: "https://space.bilibili.com/1839266321?spm_id_from=333.1007.0.0", icon: "paperplane" },
+      ],
+    };
+
+    // ✅ 标签由这里统一控制：想加标签就往数组里加
+    const TAGS = [
+      "AI", "习惯", "生产力",
+      "提示词", "写作", 
+      "文献检索"
+    ];
+
+    // ✅ 文章由这里统一控制：已替换为你附件里的 4 篇文章
+    const POSTS = [
+      {
+        id: "post-1",
+        category: "推荐",
+        date: "2026-01-05",
+        crumbs: [{ text: "AI相关工具", href: "#tools" }, { text: "归档", href: "#archive" }],
+        title: "两个习惯，让你走在 AI 时代前列",
+        excerpt: "杠杆换手了：从“平台杠杆”到“个人杠杆”。两件事帮你跟上：沉淀文档 + 建立判断力。",
+        tags: ["AI", "习惯", "生产力"],
+        contentHtml: `
+          <div class="article-content">
+            <p>今天读到 Notion 创始人的一篇文章，有个细节让我停了很久——他的联合创始人 Simon 原本是“10 倍工程师”，但现在很少亲自写代码，却成了“40X 工程师”。</p>
+            <p><b>我意识到一件事：</b>杠杆换手了。</p>
+
+            <h3>杠杆换手：从平台到个人</h3>
+            <p>过去二十年，知识工作者的杠杆在平台：进大厂、进大平台、拿大杠杆。</p>
+            <p>但现在，那些会用 AI 的人，正在拿到自己的杠杆。</p>
+
+            <h3>普通人怎么拿到这个杠杆？</h3>
+            <blockquote>
+              乔布斯说“电脑是大脑的自行车”。后来我们有了互联网——“信息高速公路”。但直到今天，大多数知识工作依然是人力驱动的：我们费力地蹬着自行车，行驶在无限速高速公路上。
+            </blockquote>
+
+            <p>AI 智能体的出现，意味着有人已经从骑自行车升级到开汽车。</p>
+            <p>区别不在于“更努力”，而在于是否重新设计了工作的方式。</p>
+
+            <hr/>
+
+            <h3>工业革命的类比：别只是在替换水车</h3>
+            <p>工业革命初期，蒸汽机出现后，许多工厂主只是把蒸汽机装到原本水车的位置上——其他一切照旧，生产力提升很有限。</p>
+            <p>真正的爆发发生在他们意识到可以“脱离水”，开始围绕蒸汽机重新设计工厂。</p>
+            <p>我们今天用 AI 问问题、改文案，常常只是“替换水车”；更大的跃迁在于重新设计工作流。</p>
+
+            <h3>两件事，让你更快拿到杠杆</h3>
+            <ol>
+              <li><b>沉淀文档：</b>把你的知识、流程、SOP 记录下来，让 AI 能读懂、能复用。</li>
+              <li><b>建立判断力：</b>建立你对“什么是好产出”的标准——这是你不可替代的部分。</li>
+            </ol>
+
+            <p>如果你一直在盯着干，说明你还在用“人肉质检”的模式；</p>
+            <p>如果你在定标准、教 AI、抽查迭代——你才是真的拿到了杠杆。</p>
+            <p><b>杠杆已经换手了。</b>那些先意识到的人，已经在用“汽车”跑高速了。你呢？</p>
+          </div>
+        `,
+      },
+
+      {
+        id: "post-2",
+        category: "提示词",
+        date: "2026-01-04",
+        crumbs: [{ text: "资源导航", href: "#resources" }, { text: "归档", href: "#archive" }],
+        title: "个人语言风格抽取提示词",
+        excerpt: "用于从文章中抽取指定人物的语言表达：身份定位、核心任务、工作流程、输出模板与注意事项，一次到位。",
+        tags: ["提示词", "写作", "风格"],
+        contentHtml: `
+          <div class="article-content">
+            <p>下面是一套可直接复制使用的提示词，用于从公众号文章/长文中抽取某位人物的语言表达，并保留语境信息。</p>
+
+            <h3>身份定位</h3>
+            <p>你是一位专业的文本分析和整理专家，擅长从复杂文本中精准识别、抽取和整理特定人物的语言表达，同时完整保留语境信息。</p>
+
+            <h3>核心任务</h3>
+            <p>从提供的文章中抽取指定人物的所有语言表达，包括直接引用、间接转述、观点阐述等，确保不遗漏、不篡改、不压缩。</p>
+
+            <h3>工作流程</h3>
+            <ol>
+              <li><b>文本解析：</b>通篇阅读文章，识别目标人物的所有语言表达。</li>
+              <li><b>类型标记：</b>区分直接引语、间接引语、观点转述等表达形式。</li>
+              <li><b>语境保留：</b>每段输出必须带上必要的上下文（谁对谁说、在什么情境下）。</li>
+              <li><b>连续输出：</b>按文章顺序依次输出，不跳跃、不合并、不缩写。</li>
+            </ol>
+
+            <h3>输出格式（模板）</h3>
+            <pre><code>【表达片段 #1】
+- 表达类型：直接引语 / 间接转述 / 观点阐述
+- 场景语境：发生在什么情境下（必要时补充角色关系/前后因果）
+- 原文表达：完整粘贴（不压缩、不改写）
+
+---
+【表达片段 #2】
+...
+
+[继续下一个表达片段...]</code></pre>
+
+            <h3>整理说明</h3>
+            <ul>
+              <li>共提取 [数量] 处语言表达</li>
+              <li>包含直接引语 [数量] 处，间接转述 [数量] 处</li>
+              <li>所有内容均保持原文完整性，未进行任何修改或压缩</li>
+            </ul>
+
+            <h3>特别提醒</h3>
+            <ul>
+              <li>严格按格式输出，确保结构清晰</li>
+              <li>保持中性立场，不添加主观判断或评价</li>
+              <li>如遇表达内容较长，完整呈现，不要截断</li>
+              <li>注意识别隐含的观点表达和态度倾向</li>
+            </ul>
+          </div>
+        `,
+      },
+
+      {
+        id: "post-3",
+        category: "观点",
+        date: "2026-01-03",
+        crumbs: [{ text: "归档", href: "#archive" }, { text: "关于", href: "#about" }],
+        title: "挑战：AI时代人才工作面临三重困境",
+        excerpt: "技术红利的背面是结构性挑战：岗位替代与技能生锈、供需错配、算法治理与人机信任。",
+        tags: ["AI", "人才", "伦理"],
+        contentHtml: `
+          <div class="article-content">
+            <p>机遇的背面总是挑战。技术变革带来了岗位替代与技能“生锈”的风险，AI 的替代效应正从重复性体力劳动迅速蔓延至程式化脑力工作。</p>
+
+            <h3>困境一：岗位替代与技能“生锈”</h3>
+            <p>当 AI 能接管越来越多“可流程化”的任务时，许多岗位将被重组：一部分工作被替代，一部分工作被重新定义。</p>
+            <p>更隐蔽的问题是“技能生锈”：如果把判断与思考也外包给工具，长期可能削弱批判性思维与记忆能力，形成“越用 AI，越不会思考”的循环。</p>
+
+            <h3>困境二：总量短缺 + 结构错配</h3>
+            <p>人才供需呈现“双重矛盾”：一边是总量短缺，一边是结构错配。产业真正需要的，往往是能跨域理解业务、数据与工程的人。</p>
+            <p>但现实中，基础研究与“冷板凳”领域投入不足、跨学科导师和项目稀缺等问题，会拉大“高校教的”和“产业要的”之间的鸿沟。</p>
+
+            <h3>困境三：人机信任与伦理治理</h3>
+            <p>当算法深度介入人才评价与选拔，其“黑箱”特性可能衍生新的不公：数据偏差、规则不透明、结果难以解释。</p>
+            <p>同时，信息过载与算法推荐也可能固化偏见。如何在开放引才与数据安全之间取得平衡，也考验人才治理的智慧。</p>
+
+            <hr/>
+
+            <h3>一个更稳妥的方向</h3>
+            <ul>
+              <li><b>个体层面：</b>保持可迁移能力（判断力、表达力、跨域协作）。</li>
+              <li><b>组织层面：</b>把 AI 当作工作流的一部分，重塑流程，而非只做“工具替换”。</li>
+              <li><b>治理层面：</b>推进可解释、可审计的算法机制与边界规范。</li>
+            </ul>
+
+            <p>AI 时代的竞争，不只是“会不会用工具”，更是“能不能定义标准、重塑流程、守住底线”。</p>
+          </div>
+        `,
+      },
+
+      {
+        id: "post-4",
+        category: "提示词",
+        date: "2026-01-02",
+        crumbs: [{ text: "资源导航", href: "#resources" }, { text: "AI相关工具", href: "#tools" }],
+        title: "AI辅助检索文献提示词",
+        excerpt: "为综述写作做 Scopus 文献调研：如何构建 TITLE-ABS-KEY 检索式，并用 TITLE 排除提升精度（可直接复制）。",
+        tags: ["提示词", "文献检索", "Scopus"],
+        contentHtml: `
+          <div class="article-content">
+            <p>下面是一段可直接用于 ChatGPT 的提示词，用来生成 <b>Scopus 高级检索式</b>：核心用 <code>TITLE-ABS-KEY</code> 做全面覆盖，用 <code>TITLE</code> 做标题级排除提升精度。</p>
+
+            <h3>需求（你要让 AI 做什么）</h3>
+            <ol>
+              <li><b>全面性：</b>必须包含核心概念的所有命名变体，必要时使用截词符 <code>*</code> 和通配符 <code>?</code>。</li>
+              <li><b>检索广度：</b>必须采用摘要级检索 <code>TITLE-ABS-KEY</code> 来构建核心概念语义群。</li>
+              <li><b>检索精度：</b>必须采用标题级排除 <code>NOT TITLE</code> 过滤不相关文献。</li>
+            </ol>
+
+            <h3>检索策略构建指南</h3>
+            <ol>
+              <li>先判断主题复杂度：单一概念 vs 多概念复合主题。</li>
+              <li>单一概念：构建一个“足够全面”的语义群。</li>
+              <li>多概念主题：拆成 2–3 个核心概念，每个概念独立构建语义群，再用 <code>AND</code> 组合。</li>
+              <li>由多个单词组成的术语优先用邻近（如 <code>W/3~W/5</code>）。</li>
+              <li>语义群内部用 <code>OR</code>，不同概念之间用 <code>AND</code>。</li>
+            </ol>
+
+            <h3>示例（可复制后替换词项）</h3>
+            <pre><code>TITLE-ABS-KEY("核心概念A" OR "命名变体A1" OR "命名变体A2")
+AND TITLE-ABS-KEY("核心概念B" OR "命名变体B1" OR "命名变体B2")
+AND NOT TITLE("容易误检的词1" OR "容易误检的词2")</code></pre>
+
+            <h3>可直接投喂给 AI 的提示词</h3>
+            <pre><code>我需要为「{你的领域}」做文献调研来写综述。导师给了关键词「{关键词}」。
+请为我设计一个可以直接用于 Scopus 的高级检索式，要求：
+
+1) 必须包含所有命名变体（可用 * 和 ?）
+2) 核心检索使用 TITLE-ABS-KEY（覆盖标题/摘要/关键词）
+3) 用 NOT TITLE 排除常见误检主题（给出 5~10 个可疑排除词）
+4) 若为多概念主题：拆成 2~3 个概念语义群，用 AND 组合；语义群内部用 OR
+5) 输出最终检索式（可直接复制），并解释每一段语义群的设计理由</code></pre>
+
+            <p>你只需要把 <b>{你的领域}</b> 与 <b>{关键词}</b> 填好，然后让 AI 生成检索式即可。</p>
+          </div>
+        `,
+      },
+    ];
+
+    /* =========================================================
+       2) 渲染：分类数量自动统计、标签从 TAGS 生成、文章列表生成
+       ========================================================= */
+
+    function $(sel){ return document.querySelector(sel); }
+
+    function setText(id, text){
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+    function setHref(id, href){
+      const el = document.getElementById(id);
+      if (el) el.setAttribute("href", href);
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function iconSvg(name){
+      if (name === "github") {
+        return `<svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 .5a11.5 11.5 0 0 0-3.63 22.4c.57.1.78-.25.78-.56v-2c-3.18.7-3.85-1.35-3.85-1.35-.52-1.32-1.27-1.67-1.27-1.67-1.04-.7.08-.68.08-.68 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.52-2.54-.29-5.22-1.27-5.22-5.65 0-1.25.45-2.27 1.18-3.07-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.17a11 11 0 0 1 5.8 0c2.2-1.48 3.17-1.17 3.17-1.17.64 1.59.24 2.76.12 3.05.73.8 1.18 1.82 1.18 3.07 0 4.39-2.69 5.36-5.24 5.64.41.36.78 1.07.78 2.16v3.2c0 .31.2.66.79.56A11.5 11.5 0 0 0 12 .5Z"/>
+        </svg>`;
+      }
+      return `<svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm4.7 7.6-1.64 7.74c-.12.55-.45.68-.9.42l-2.5-1.84-1.2 1.16c-.13.13-.25.25-.5.25l.18-2.6 4.74-4.28c.2-.18-.05-.28-.32-.1l-5.86 3.7-2.52-.78c-.55-.17-.56-.55.12-.82l9.83-3.8c.46-.17.86.1.7.95Z"/>
+      </svg>`;
+    }
+
+    function renderSite(){
+      setText("brandName", SITE.name);
+      setText("brandSub", SITE.subtitle);
+      setText("profileName", SITE.name);
+      setText("profileTagline", SITE.tagline);
+      setText("emailText", SITE.email);
+      setHref("emailLink", `mailto:${SITE.email}`);
+
+      setText("footerName", SITE.name);
+      setText("footerEmailText", SITE.email);
+      setHref("footerEmailLink", `mailto:${SITE.email}`);
+
+      const badge = document.getElementById("brandBadge");
+      if (badge) badge.textContent = (SITE.name || "A").trim().slice(0,1).toUpperCase();
+
+      const avatar = document.getElementById("avatarImg");
+      if (avatar) avatar.setAttribute("src", SITE.avatar);
+
+      const socialWrap = document.getElementById("socialLinks");
+      socialWrap.innerHTML = SITE.socials.map(s => `
+        <a class="icon-btn" href="${s.href}" target="_blank" rel="noopener">
+          ${iconSvg(s.icon)}
+          ${escapeHtml(s.label)}
+        </a>
+      `).join("");
+    }
+
+    function categoryCounts(){
+      const map = new Map();
+      POSTS.forEach(p => map.set(p.category, (map.get(p.category) || 0) + 1));
+      return Array.from(map.entries()).sort((a,b) => (b[1]-a[1]) || a[0].localeCompare(b[0], "zh"));
+    }
+
+    let activeTag = null;
+    let activeCategory = null;
+    let keyword = "";
+
+    function renderCategories(){
+      const ul = document.getElementById("categoryList");
+      ul.innerHTML = categoryCounts().map(([cat, count]) => `
+        <li>
+          <a class="kv" href="#" data-category="${escapeHtml(cat)}">
+            <span class="k">${escapeHtml(cat)}</span>
+            <span class="v">${count}</span>
+          </a>
+        </li>
+      `).join("");
+
+      ul.querySelectorAll("[data-category]").forEach(a => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          const cat = a.getAttribute("data-category");
+          activeCategory = (activeCategory === cat) ? null : cat;
+          renderPosts();
+        });
+      });
+    }
+
+    function renderTags(){
+      const wrap = document.getElementById("tagList");
+      wrap.innerHTML = TAGS.map(t => `
+        <button class="tag" type="button" aria-pressed="${activeTag===t}" data-tag="${escapeHtml(t)}">${escapeHtml(t)}</button>
+      `).join("");
+
+      wrap.querySelectorAll("[data-tag]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const t = btn.getAttribute("data-tag");
+          activeTag = (activeTag === t) ? null : t;
+          renderTags();
+          renderPosts();
+        });
+      });
+    }
+
+    function matchPost(p){
+      const kw = keyword.trim().toLowerCase();
+      const matchKw = !kw || (p.title + " " + p.excerpt).toLowerCase().includes(kw);
+      const matchCat = !activeCategory || p.category === activeCategory;
+      const matchTag = !activeTag || (p.tags || []).includes(activeTag);
+      return matchKw && matchCat && matchTag;
+    }
+
+    function renderPosts(){
+      const list = document.getElementById("postList");
+      const filtered = POSTS.filter(matchPost);
+
+      if (filtered.length === 0){
+        list.innerHTML = `<div class="post" style="cursor:default">
+          <h2 style="margin:0 0 8px">没有匹配的文章</h2>
+          <p class="excerpt">请尝试清除筛选或换个关键词。</p>
+        </div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map(p => `
+        <article class="post" data-post-id="${escapeHtml(p.id)}">
+          <div class="meta">
+            <span class="badge">${escapeHtml(p.category)}</span>
+            <span>${escapeHtml(p.date)}</span>
+            <span class="crumbs">/ ${p.crumbs.map(c => `<a href="${c.href}">${escapeHtml(c.text)}</a>`).join(" / ")}</span>
+          </div>
+
+          <h2>${escapeHtml(p.title)}</h2>
+          <p class="excerpt">${escapeHtml(p.excerpt)}</p>
+
+          <div class="post-tags">
+            ${(p.tags || []).map(t => `<span class="tag" role="button" tabindex="0" data-tag="${escapeHtml(t)}">${escapeHtml(t)}</span>`).join("")}
+          </div>
+        </article>
+      `).join("");
+
+      // 点击文章打开弹窗
+      list.querySelectorAll(".post").forEach(card => {
+        card.addEventListener("click", (e) => {
+          const tagEl = e.target.closest("[data-tag]");
+          if (tagEl) return; // 点标签只筛选，不打开文章
+          openPost(card.getAttribute("data-post-id"));
+        });
+
+        // tag 点击筛选（阻止冒泡）
+        card.querySelectorAll("[data-tag]").forEach(t => {
+          t.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const tag = t.getAttribute("data-tag");
+            activeTag = (activeTag === tag) ? null : tag;
+            renderTags();
+            renderPosts();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          });
+        });
+      });
+    }
+
+    /* =========================================================
+       3) 文章弹窗：打开/关闭 + hash 直达
+       ========================================================= */
+    const backdrop = document.getElementById("modalBackdrop");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalMeta = document.getElementById("modalMeta");
+    const modalContent = document.getElementById("modalContent");
+    const modalCloseBtn = document.getElementById("modalCloseBtn");
+
+    function findPostById(id){
+      return POSTS.find(p => p.id === id);
+    }
+
+    function openPost(id){
+      const p = findPostById(id);
+      if (!p) return;
+
+      modalTitle.textContent = p.title;
+      modalMeta.innerHTML = `
+        <span class="badge">${escapeHtml(p.category)}</span>
+        <span>${escapeHtml(p.date)}</span>
+        <span class="crumbs">/ ${p.crumbs.map(c => `<a href="${c.href}">${escapeHtml(c.text)}</a>`).join(" / ")}</span>
+      `;
+      modalContent.innerHTML = p.contentHtml || "<p>暂无正文</p>";
+
+      backdrop.classList.add("open");
+      backdrop.setAttribute("aria-hidden", "false");
+
+      if (location.hash !== `#${id}`) history.pushState(null, "", `#${id}`);
+    }
+
+    function closePost(){
+      backdrop.classList.remove("open");
+      backdrop.setAttribute("aria-hidden", "true");
+      if (location.hash.startsWith("#post-")) history.pushState(null, "", "#home");
+    }
+
+    backdrop.addEventListener("click", (e) => {
+      if (e.target === backdrop) closePost();
+    });
+    modalCloseBtn.addEventListener("click", closePost);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && backdrop.classList.contains("open")) closePost();
+    });
+
+    function openFromHash(){
+      const h = location.hash.replace("#", "");
+      if (h.startsWith("post-")) openPost(h);
+    }
+    window.addEventListener("hashchange", openFromHash);
+
+    /* =========================================================
+       4) 其它：顶部菜单、搜索、清除筛选
+       ========================================================= */
+    const menuBtn = document.getElementById("menuBtn");
+    const topNav = document.getElementById("topNav");
+    menuBtn?.addEventListener("click", () => {
+      const open = topNav.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(open));
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("input", () => {
+      keyword = searchInput.value;
+      renderPosts();
+    });
+
+    document.getElementById("clearBtn").addEventListener("click", () => {
+      activeTag = null;
+      activeCategory = null;
+      keyword = "";
+      searchInput.value = "";
+      renderTags();
+      renderCategories();
+      renderPosts();
+    });
+
+    // 启动渲染
+    renderSite();
+    renderTags();
+    renderCategories();
+    renderPosts();
+    openFromHash();
+  </script>
+</body>
+</html>
